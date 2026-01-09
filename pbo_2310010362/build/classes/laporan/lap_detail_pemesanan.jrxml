@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="laporan_detail_pemesanan"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20"
+              uuid="af827670-77d5-42a7-86d7-a188c8945ec1">
+
+    <!-- QUERY -->
+    <queryString language="SQL">
+        <![CDATA[
+        SELECT 
+            ID_Detail_Pemesanan,
+            Harga_Produk,
+            Jumlah_Pemesanan,
+            Status_Detail_Pemesanan,
+            ID_Pemesanan,
+            ID_Produk
+        FROM detail_pemesanan
+        ]]>
+    </queryString>
+
+    <!-- FIELD -->
+    <field name="ID_Detail_Pemesanan" class="java.lang.String"/>
+    <field name="Harga_Produk" class="java.lang.String"/>
+    <field name="Jumlah_Pemesanan" class="java.lang.String"/>
+    <field name="Status_Detail_Pemesanan" class="java.lang.String"/>
+    <field name="ID_Pemesanan" class="java.lang.String"/>
+    <field name="ID_Produk" class="java.lang.String"/>
+
+    <!-- JUDUL -->
+    <title>
+        <band height="40">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font size="14" isBold="true"/>
+                </textElement>
+                <text><![CDATA[LAPORAN DETAIL PEMESANAN]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <!-- HEADER KOLOM -->
+    <columnHeader>
+        <band height="20">
+            <staticText><reportElement x="0" y="0" width="80" height="20"/><text><![CDATA[ID Detail]]></text></staticText>
+            <staticText><reportElement x="80" y="0" width="80" height="20"/><text><![CDATA[Harga]]></text></staticText>
+            <staticText><reportElement x="160" y="0" width="80" height="20"/><text><![CDATA[Jumlah]]></text></staticText>
+            <staticText><reportElement x="240" y="0" width="120" height="20"/><text><![CDATA[Status]]></text></staticText>
+            <staticText><reportElement x="360" y="0" width="90" height="20"/><text><![CDATA[ID Pemesanan]]></text></staticText>
+            <staticText><reportElement x="450" y="0" width="100" height="20"/><text><![CDATA[ID Produk]]></text></staticText>
+        </band>
+    </columnHeader>
+
+    <!-- DATA -->
+    <detail>
+        <band height="20">
+            <textField><reportElement x="0" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{ID_Detail_Pemesanan}]]></textFieldExpression></textField>
+            <textField><reportElement x="80" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{Harga_Produk}]]></textFieldExpression></textField>
+            <textField><reportElement x="160" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{Jumlah_Pemesanan}]]></textFieldExpression></textField>
+            <textField><reportElement x="240" y="0" width="120" height="20"/><textFieldExpression><![CDATA[$F{Status_Detail_Pemesanan}]]></textFieldExpression></textField>
+            <textField><reportElement x="360" y="0" width="90" height="20"/><textFieldExpression><![CDATA[$F{ID_Pemesanan}]]></textFieldExpression></textField>
+            <textField><reportElement x="450" y="0" width="100" height="20"/><textFieldExpression><![CDATA[$F{ID_Produk}]]></textFieldExpression></textField>
+        </band>
+    </detail>
+
+</jasperReport>

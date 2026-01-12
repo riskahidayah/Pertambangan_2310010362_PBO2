@@ -17,10 +17,9 @@ public class Koneksi {
     public static Connection getKoneksi() {
         if (koneksi == null) {
             try {
-                // Pastikan URL, user, dan password sesuai dengan database yang sudah Anda buat.
                 String url = "jdbc:mysql://localhost:3306/pbo_2310010362"; 
-                String user = "root"; // Seringkali 'root' untuk XAMPP/WAMP
-                String password = ""; // Seringkali kosong untuk XAMPP/WAMP
+                String user = "root"; 
+                String password = ""; 
 
                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
                 koneksi = DriverManager.getConnection(url, user, password);

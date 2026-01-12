@@ -24,10 +24,9 @@ public class DetailPemesanan {
     private String sql;
     public boolean validasi = false;
 
-    // 1. Fungsi SIMPAN/TAMBAH ITEM
+    
     public void simpanDetail(String id_detail, String id_pesanan, String id_produk, int harga, int jumlah, String status) {
         try {
-            // Cek duplikasi ID Detail Pemesanan
             sql = "SELECT * FROM detail_pemesanan WHERE ID_detail_pemesanan = ?";
             PreparedStatement cekdata = koneksidb.prepareStatement(sql);
             cekdata.setString(1, id_detail);
@@ -37,7 +36,6 @@ public class DetailPemesanan {
                 JOptionPane.showMessageDialog(null, "ID Detail Pemesanan Sudah Ada!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 this.validasi = false;
             } else {
-                // Query Insert Data
                 sql = "INSERT INTO detail_pemesanan (ID_detail_pemesanan, ID_pemesanan, ID_Produk, Harga_Produk, Jumlah_pemesanan, Status_Detail_Pemesanan) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement perintah = koneksidb.prepareStatement(sql);
                 perintah.setString(1, id_detail);
@@ -61,7 +59,6 @@ public class DetailPemesanan {
         }
     }
 
-    // 2. Fungsi HAPUS (Delete)
     public void hapusDetail(String id_detail) {
         try {
             sql = "DELETE FROM detail_pemesanan WHERE ID_detail_pemesanan=?";
@@ -75,7 +72,6 @@ public class DetailPemesanan {
         }
     }
 
-    // 3. Fungsi TAMPIL DATA (Filter berdasarkan ID Pemesanan yang dipilih di ComboBox)
    public void tampilData(JTable tabel, String sql) {
     DefaultTableModel model = new DefaultTableModel();
 
@@ -111,7 +107,6 @@ public class DetailPemesanan {
 
 
     
-    // 4. Fungsi MEMUAT DATA ID PEMESANAN ke ComboBox
     public void muatIdPemesanan(JComboBox<String> cmb) {
         cmb.removeAllItems();
         cmb.addItem("-- Pilih ID Pemesanan --");
@@ -127,7 +122,6 @@ public class DetailPemesanan {
         }
     }
     
-    // 5. Fungsi MEMUAT DATA PRODUK (ID dan Nama Produk) ke ComboBox
     public void muatDataProduk(JComboBox<String> cmb) {
         cmb.removeAllItems();
         cmb.addItem("-- Pilih Produk --");
@@ -136,8 +130,6 @@ public class DetailPemesanan {
             st = koneksidb.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                // Menyimpan ID_produk di belakang Nama Produk (misal: Pasir | P001)
-                // Harga juga disematkan di sini agar bisa diambil saat Produk dipilih
                 String item = rs.getString("jenis_produk") + " | " + rs.getString("ID_produk") + " | " + rs.getInt("harga");
                 cmb.addItem(item);
             }
@@ -146,11 +138,9 @@ public class DetailPemesanan {
         }
     }
     
-    // Fungsi pembantu untuk mendapatkan ID Produk dari ComboBox
     public String getIdProdukFromCmb(JComboBox<String> cmb) {
         String selectedItem = (String) cmb.getSelectedItem();
         if (selectedItem != null && selectedItem.contains(" | ")) {
-            // Mengambil ID yang berada di tengah (setelah Nama, sebelum Harga)
             String[] parts = selectedItem.split(" \\| ");
             if (parts.length >= 2) {
                 return parts[1].trim();
@@ -159,11 +149,9 @@ public class DetailPemesanan {
         return null;
     }
     
-    // Fungsi pembantu untuk mendapatkan Harga Produk dari ComboBox
     public int getHargaProdukFromCmb(JComboBox<String> cmb) {
         String selectedItem = (String) cmb.getSelectedItem();
         if (selectedItem != null && selectedItem.contains(" | ")) {
-            // Mengambil Harga yang berada di akhir
             String[] parts = selectedItem.split(" \\| ");
             if (parts.length >= 3) {
                 try {

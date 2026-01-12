@@ -31,7 +31,6 @@ public class Pemesanan {
     
     public void simpanPemesanan(String id_pesan, String tgl, String id_konsumen, String id_karyawan, String notes) {
         try {
-            // Cek duplikasi ID Pemesanan
             sql = "SELECT * FROM pemesanan WHERE ID_pemesanan = ?";
             PreparedStatement cekdata = koneksidb.prepareStatement(sql);
             cekdata.setString(1, id_pesan);
@@ -41,7 +40,6 @@ public class Pemesanan {
                 JOptionPane.showMessageDialog(null, "ID Pemesanan Sudah Ada!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 this.validasi = false;
             } else {
-                // Query Insert Data
                 sql = "INSERT INTO pemesanan (ID_pemesanan, tanggal_pemesanan, ID_Konsumen, ID_Karyawan, Notes) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement perintah = koneksidb.prepareStatement(sql);
                 perintah.setString(1, id_pesan);
@@ -61,7 +59,6 @@ public class Pemesanan {
         }
     }
 
-    // 2. Fungsi UBAH (Update)
     public void ubahPemesanan(String id_pesan, String tgl, String id_konsumen, String id_karyawan, String notes) {
         try {
             sql = "UPDATE pemesanan SET tanggal_pemesanan=?, ID_Konsumen=?, ID_Karyawan=?, Notes=? WHERE ID_pemesanan=?";
@@ -79,7 +76,6 @@ public class Pemesanan {
         }
     }
 
-    // 3. Fungsi HAPUS (Delete)
     public void hapusPemesanan(String id_pesan) {
         try {
             sql = "DELETE FROM pemesanan WHERE ID_pemesanan=?";
@@ -93,14 +89,12 @@ public class Pemesanan {
         }
     }
 
-    // 4. Fungsi TAMPIL DATA (Read)
-    // Menggabungkan (JOIN) tabel Konsumen dan Karyawan untuk menampilkan Nama daripada hanya ID
     public void tampilData(JTable tbl) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID Pemesanan");
         model.addColumn("Tanggal");
-        model.addColumn("Konsumen"); // Nama Perusahaan
-        model.addColumn("Karyawan"); // Nama Karyawan
+        model.addColumn("Konsumen"); 
+        model.addColumn("Karyawan"); 
         model.addColumn("Notes");
 
         String sqlTampil = "SELECT p.ID_pemesanan, p.tanggal_pemesanan, k.Nama_Perusahaan, r.Nama_Karyawan, p.Notes " +
@@ -128,7 +122,6 @@ public class Pemesanan {
         }
     }
     
-    // 5. Fungsi MEMUAT DATA KE COMBOBOX (Mengambil ID dan Nama)
     public void muatDataKonsumen(JComboBox<String> cmb) {
         cmb.removeAllItems();
         cmb.addItem("-- Pilih Konsumen --");
@@ -137,7 +130,6 @@ public class Pemesanan {
             st = koneksidb.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                // Menyimpan ID_Konsumen di belakang Nama (misal: Nama Perusahaan | K001)
                 cmb.addItem(rs.getString("Nama_Perusahaan") + " | " + rs.getString("ID_Konsumen"));
             }
         } catch (SQLException e) {
@@ -153,7 +145,6 @@ public class Pemesanan {
             st = koneksidb.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                // Menyimpan ID_Karyawan di belakang Nama (misal: Nama Karyawan | R001)
                 cmb.addItem(rs.getString("Nama_Karyawan") + " | " + rs.getString("ID_Karyawan"));
             }
         } catch (SQLException e) {
@@ -161,17 +152,15 @@ public class Pemesanan {
         }
     }
     
-    // Fungsi pembantu untuk mendapatkan ID dari ComboBox
     public String getIdFromCmb(JComboBox<String> cmb) {
     String selectedItem = (String) cmb.getSelectedItem();
     if (selectedItem == null || selectedItem.startsWith("--")) {
         return ""; // kembalikan kosong kalau belum memilih
     }
     if (selectedItem.contains(" | ")) {
-        // ambil ID di belakang tanda " | "
         return selectedItem.substring(selectedItem.lastIndexOf(" | ") + 3).trim();
     }
-    return ""; // fallback aman
+    return ""; 
 }
 
     public void tampilData(JTable table, String sql) {

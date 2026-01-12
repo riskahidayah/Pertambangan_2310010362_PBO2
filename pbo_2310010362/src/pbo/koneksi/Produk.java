@@ -28,7 +28,6 @@ public class Produk {
     
     public void simpanProduk(String id, String jenis, String ukr, double hrg) {
         try {
-            // Cek duplikasi ID Produk
             sql = "SELECT * FROM jenis_produk WHERE ID_produk = ?";
             PreparedStatement cekdata = koneksidb.prepareStatement(sql);
             cekdata.setString(1, id);
@@ -38,7 +37,6 @@ public class Produk {
                 JOptionPane.showMessageDialog(null, "ID Produk Sudah Ada!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 this.validasi = false;
             } else {
-                // Query Insert Data
                 sql = "INSERT INTO jenis_produk (ID_produk, jenis_produk, ukuran, harga) VALUES (?, ?, ?, ?)";
                 PreparedStatement perintah = koneksidb.prepareStatement(sql);
                 perintah.setString(1, id);
@@ -57,7 +55,6 @@ public class Produk {
         }
     }
 
-    // 2. Fungsi UBAH (Update)
     public void ubahProduk(String id, String jenis, String ukr, double hrg) {
         try {
             sql = "UPDATE jenis_produk SET jenis_produk=?, ukuran=?, harga=? WHERE ID_produk=?";
@@ -74,7 +71,6 @@ public class Produk {
         }
     }
 
-    // 3. Fungsi HAPUS (Delete)
     public void hapusProduk(String id) {
         try {
             sql = "DELETE FROM jenis_produk WHERE ID_produk=?";
@@ -88,10 +84,8 @@ public class Produk {
         }
     }
 
-    // 4. Fungsi TAMPIL DATA (Read)
     public void tampilData(JTable tbl, String sql) {
         DefaultTableModel model = new DefaultTableModel();
-        // Menambahkan kolom sesuai struktur tabel database
         model.addColumn("ID Produk");
         model.addColumn("Jenis Produk");
         model.addColumn("Ukuran");
@@ -114,8 +108,7 @@ public class Produk {
             JOptionPane.showMessageDialog(null, "Gagal Tampilkan Data: " + e.getMessage());
         }
     }
-    
-    // 5. Fungsi CARI DATA
+
     public void cariProduk(String id) {
         try {
             sql = "SELECT * FROM jenis_produk WHERE ID_produk = ?";

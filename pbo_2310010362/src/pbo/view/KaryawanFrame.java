@@ -351,7 +351,7 @@ public class KaryawanFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Data tidak ditemukan atau ID kosong!");
         }
 
-        tampilData(); // refresh tabel setelah update berhasil
+        tampilData(); 
         bersih();
         txtIdKaryawan.setEditable(true);
     } catch (SQLException e) {

@@ -42,7 +42,6 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
             }
         });
         
-        // Tambahkan Action Listeners ke Tombol (agar bisa dihubungkan ke metode di bawah)
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) { btnHapusActionPerformed(evt); }
         });
@@ -52,11 +51,9 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
     }
     
     private void initFrame() {
-        // Muat data ke ComboBox
         detailPemesanan.muatIdPemesanan(cmbPemesanan);
         detailPemesanan.muatDataProduk(cmbProduk);
         
-        // Isi ComboBox Status
         cmbStatus.removeAllItems();
         cmbStatus.addItem("-- Pilih Status --");
         for (String status : statusOptions) {
@@ -64,14 +61,13 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
         }
         
         bersih();
-      //  enableField(false);
-        txtHarga.setEditable(false); // Harga Produk harus terisi otomatis dari cmbProduk
+        txtHarga.setEditable(false); 
     }
     
     private void tampilDataDetail() {
     String sql = "SELECT * FROM detail_pemesanan";
     DetailPemesanan dp = new DetailPemesanan();
-    dp.tampilData(tabelDetail, sql); // sesuaikan nama JTable
+    dp.tampilData(tabelDetail, sql); 
 }
 
 
@@ -298,7 +294,6 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
         String jumlahStr = txtJumlah.getText();
         String status = (String) cmbStatus.getSelectedItem();
 
-        // Validasi Wajib Isi
         if (idPemesanan == null || idPemesanan.equals("-- Pilih ID Pemesanan --") || idProduk == null || txtIdDetailPemesanan.getText().isEmpty() || jumlahStr.isEmpty() || status == null || status.equals("-- Pilih Status --")) {
             JOptionPane.showMessageDialog(null, "Semua field harus diisi!");
             return;
@@ -361,7 +356,6 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
         if (baris != -1) {
             DefaultTableModel model = (DefaultTableModel) tabelDetail.getModel();
             
-            // Mengambil data dari tabel
             String idDetail = model.getValueAt(baris, 0).toString();
             String idPesanan = model.getValueAt(baris, 1).toString();
             String produkTabel = model.getValueAt(baris, 2).toString();
@@ -369,16 +363,13 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
             String jumlahTabel = model.getValueAt(baris, 4).toString();
             String statusTabel = model.getValueAt(baris, 5).toString();
 
-            // Memasukkan data ke komponen input
             txtIdDetailPemesanan.setText(idDetail);
             txtIdDetailPemesanan.setEditable(false);
             txtHarga.setText(hargaTabel);
             txtJumlah.setText(jumlahTabel);
 
-            // Set ComboBox ID Pemesanan
             cmbPemesanan.setSelectedItem(idPesanan);
             
-            // Set ComboBox Produk (cari berdasarkan Nama Produk)
             for (int i = 0; i < cmbProduk.getItemCount(); i++) {
                 if (cmbProduk.getItemAt(i).contains(produkTabel)) {
                     cmbProduk.setSelectedIndex(i);
@@ -386,12 +377,11 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
                 }
             }
             
-            // Set ComboBox Status
             cmbStatus.setSelectedItem(statusTabel);
             
-            btnTambahItem.setEnabled(false); // Mode Tambah Item dinonaktifkan
+            btnTambahItem.setEnabled(false); 
             btnHapus.setEnabled(true);
-            enableField(true); // Aktifkan field untuk melihat/mengedit (meski kita hanya implementasi hapus)
+            enableField(true); 
         }
     }//GEN-LAST:event_tabelDetailMouseClicked
 
@@ -419,16 +409,12 @@ public class DetailPemesananFrame extends javax.swing.JFrame {
     private void cmbProdukActionPerformed(java.awt.event.ActionEvent evt) {                                            
     String selectedItem = (String) cmbProduk.getSelectedItem();
     
-    // Cek apakah item yang dipilih valid (bukan "-- Pilih Produk --")
     if (selectedItem != null && !selectedItem.equals("-- Pilih Produk --")) {
         try {
-            // Mengambil harga dari item yang dipilih (Harga berada di bagian akhir string)
             int harga = detailPemesanan.getHargaProdukFromCmb(cmbProduk);
             
-            // Mengisi field txtHarga
             txtHarga.setText(String.valueOf(harga));
         } catch (Exception e) {
-            // Jika ada masalah parsing (seharusnya tidak terjadi jika data di DB bersih)
             txtHarga.setText(""); 
         }
     } else {
